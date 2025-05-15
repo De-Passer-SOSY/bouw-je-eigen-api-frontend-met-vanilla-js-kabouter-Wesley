@@ -4,33 +4,93 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="output.css" />
   </head>
   <body>
-    <ul id="duck-list"></ul>
+    <section class="flex flex-row p-5 gap-15">
+      <section class="flex flex-col">
+        <ul id="duck-list" class="max-h-200 w-fit overflow-y-auto"></ul>
+        <form class="border-2 flex flex-1 flex-row" id="search-duck-form">
+          <label>
+            <span class="sr-only">Duck Name</span>
+            <input
+              class="text-center flex border-r-2"
+              type="text"
+              placeholder="Duck Name"
+              name="name"
+            />
+          </label>
 
-    <form id="add-duck-form">
-      <label>
-        <span class="sr-only">New Duck Name</span>
-        <input type="text" placeholder="Duck Name" name="name" />
-      </label>
-      <label>
-        <span class="sr-only">Submit Duck</span>
-        <input type="submit" value="Submit" />
-      </label>
-    </form>
+          <label class="flex flex-1">
+            <span class="sr-only">Search Duck</span>
+            <input
+              class="text-center flex w-full"
+              type="submit"
+              value="Search"
+            />
+          </label>
+        </form>
+      </section>
+      <form id="add-duck-form" class="flex flex-col gap-5 bg-gray-50 h-fit">
+        <label>
+          <span class="sr-only">New Duck Name</span>
+          <input
+            class="text-center"
+            type="text"
+            placeholder="Duck Name"
+            name="naam"
+          />
+        </label>
 
-    <form id="search-duck-form">
-      <label>
-        <span class="sr-only">Duck Name</span>
-        <input type="text" placeholder="Duck Name" name="name" />
-      </label>
+        <label>
+          <span class="sr-only">Duck Categorie</span>
+          <input
+            class="text-center"
+            type="text"
+            placeholder="Duck categorie"
+            name="categorie"
+          />
+        </label>
 
-      <label>
-        <span class="sr-only">Search Duck</span>
-        <input type="submit" value="Search" />
-      </label>
-    </form>
+        <label>
+          <span class="sr-only">Duck Kleur</span>
+          <input
+            class="text-center"
+            type="text"
+            placeholder="Duck kleur"
+            name="kleur"
+          />
+        </label>
+
+        <label>
+          <span class="sr-only">Duck Materiaal</span>
+          <input
+            class="text-center"
+            type="text"
+            placeholder="Duck materiaal"
+            name="materiaal"
+          />
+        </label>
+
+        <label>
+          <span class="sr-only">Duck Beschrijving</span>
+          <input
+            class="text-center"
+            type="text"
+            placeholder="Duck beschrijving"
+            name="beschrijving"
+          />
+        </label>
+        <label class="text-center p-5 font-bold">
+          <span class="sr-only">Submit Duck</span>
+          <input
+            class="border-2 min-w-fit min-h-fit w-15 h-5 bg-gray-300 hover:bg-gray-500"
+            type="submit"
+            value="Submit"
+          />
+        </label>
+      </form>
+    </section>
     <script src="script.js"></script>
   </body>
 </html>

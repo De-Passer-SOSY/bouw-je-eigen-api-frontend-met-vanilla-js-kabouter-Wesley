@@ -30,6 +30,41 @@ app.get("/duck/:id", async (req, res) => {
   }
 });
 
+app.post("/addDuck", async (req, res) => {
+  const { naam, categorie, kleur, materiaal, beschrijving } = req.body;
+
+  if (!naam || !categorie || !kleur || !materiaal || !beschrijving) {
+    return res.status(400).json({ message: "All fields are required!" });
+  }
+
+  try {
+    const [id] = await db("rubber_ducks").insert({
+      naam,
+      categorie,
+      kleur,
+      materiaal,
+      beschrijving,
+    });
+
+    res.status(201).json({ id });
+  } catch (error) {
+    console.error("Insert error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.delete("/deleteDuck/:id", async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const deleted = await db("rubber_ducks").where({ id }).del();
+    if (deleted) res.json({ message: "Verwijderd" });
+    else res.status(404).json({ error: "Niet gevonden" });
+  } catch (error) {
+    console.error("Insert error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.listen(3333, () => {
   console.log("Server is running on port 3333! http://localhost:3333/ducks");
 });

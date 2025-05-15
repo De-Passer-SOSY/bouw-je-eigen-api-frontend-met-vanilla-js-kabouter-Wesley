@@ -26,7 +26,31 @@ async function requestAPI() {
   }
 }
 
-async function AddToDuckList(e) {}
+async function AddToDuckList(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const naam = formData.get("naam");
+  const categorie = formData.get("categorie");
+  const kleur = formData.get("kleur");
+  const materiaal = formData.get("materiaal");
+  const beschrijving = formData.get("beschrijving");
+  const response = await fetch("http://localhost:3333/addDuck", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      naam: naam,
+      categorie: categorie,
+      kleur: kleur,
+      materiaal: materiaal,
+      beschrijving: beschrijving,
+    }),
+  });
+
+  const data = await response.json();
+  alert(data.message);
+}
 
 async function searchInDuckList(e) {
   e.preventDefault();
@@ -44,14 +68,20 @@ async function createList() {
   const info = await requestAPI();
   const list = document.querySelector("#duck-list");
   list.textContent = "";
-
   listChild(list, info);
 }
 
 function listChild(parent, content) {
-  content.map((item) => {
-    const li = document.createElement("li");
-    li.textContent = item.naam;
-    parent.appendChild(li);
-  });
+  parent.innerHTML = content
+    .map(
+      (item) => `
+    <li class="p-3 bg-gray-50 m-2">
+      <section class="flex"> 
+        <span class="flex flex-1"> ${item.naam} </span>
+        <button class="bg-red-400 h-8 w-8 hover:cursor-pointer font-bold"> X </button>
+      </section>
+    </li>
+    `
+    )
+    .join("");
 }
