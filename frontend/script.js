@@ -57,7 +57,7 @@ async function searchInDuckList(e) {
   const formData = new FormData(e.target);
   const name = formData.get("name");
   const allDucks = await requestAPI();
-  const filteredDucks = allDucks.filter((duck) => duck.naam === name);
+  const filteredDucks = allDucks.filter((duck) => duck.naam.includes(name));
   const searchedDuck = filteredDucks.length > 0 ? filteredDucks : allDucks;
   const list = document.querySelector("#duck-list");
   list.textContent = "";
@@ -76,12 +76,33 @@ function listChild(parent, content) {
     .map(
       (item) => `
     <li class="p-3 bg-gray-50 m-2">
-      <section class="flex"> 
+      <section class="flex" id=#${item.id}> 
         <span class="flex flex-1"> ${item.naam} </span>
-        <button class="bg-red-400 h-8 w-8 hover:cursor-pointer font-bold"> X </button>
+        <button class="bg-red-400 h-8 w-8 hover:cursor-pointer font-bold delete-button"> X </button>
       </section>
     </li>
     `
     )
     .join("");
+
+  const deleteButton = document.querySelectorAll(".delete-button");
+  console.log(typeof deleteButton);
+  deleteButton.forEach((button) => {
+    button.addEventListener("click", deleteTask);
+  });
+}
+
+async function deleteTask(e) {
+  const button = e.target;
+  const regex = /\d+/;
+  const id = (button.parentNode.id.match(regex) || [""])[0];
+
+  const response = await fetch(`http://localhost:3333/removeDuck/${id}`, {
+    method: "DELETE",
+  })
+    .then(async () => {
+      console.log("🗑️ Afwezigheid verwijderd.", "success");
+      createList();
+    })
+    .catch(() => console.log("❌ Verwijderen mislukt.", "error"));
 }

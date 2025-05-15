@@ -53,7 +53,7 @@ app.post("/addDuck", async (req, res) => {
   }
 });
 
-app.delete("/deleteDuck/:id", async (req, res) => {
+app.delete("/removeDuck/:id", async (req, res) => {
   try {
     const id = parseInt(req.params.id);
     const deleted = await db("rubber_ducks").where({ id }).del();
