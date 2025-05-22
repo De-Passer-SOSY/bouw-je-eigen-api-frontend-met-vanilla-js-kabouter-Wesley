@@ -1,0 +1,116 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Afwezigheden API",
+    "version": "1.0.0",
+    "description": "Een eenvoudige API voor studentafwezigheden"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3333"
+    }
+  ],
+  "paths": {
+    "/ducks": {
+      "get": {
+        "summary": "Show all ducks",
+        "responses": {
+          "200": {
+            "description": "List of ducks"
+          }
+        }
+      }
+    },
+    "/duck/{id}": {
+      "get": {
+        "summary": "Show one duck",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Duck not found" },
+          "404": { "description": "Not found" }
+        }
+      }
+    },
+    "/addDuck": {
+      "post": {
+        "summary": "Add a duck",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "categorie": { "type": "string" },
+                  "color": { "type": "string" },
+                  "material": { "type": "string" },
+                  "description": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Added duck" }
+        }
+      }
+    },
+    "/updateAbsence/{id}": {
+      "put": {
+        "summary": "Wijzig een afwezigheid",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentnaam": { "type": "string" },
+                  "reden": { "type": "string" },
+                  "datum": { "type": "string", "format": "date" },
+                  "periode": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Afwezigheid bijgewerkt" }
+        }
+      }
+    },
+    "/deleteAbsence/{id}": {
+      "delete": {
+        "summary": "Verwijder een afwezigheid",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Verwijderd" },
+          "404": { "description": "Niet gevonden" }
+        }
+      }
+    }
+  }
+}

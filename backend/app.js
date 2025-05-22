@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const db = require("./db");
+const db = require("./services/db");
 
 const app = express();
 app.use(cors());
@@ -47,6 +47,30 @@ app.post("/addDuck", async (req, res) => {
     });
 
     res.status(201).json({ id });
+  } catch (error) {
+    console.error("Insert error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.put("/updateDuck", async (req, res) => {
+  try {
+    const { naam, categorie, kleur, materiaal, beschrijving } = req.body;
+    const allDucks = await db("rubber_ducks");
+    allDucks.forEach(async (duck) => {
+      if (duck.naam === naam) {
+        const id = duck.id;
+        console.log(id);
+
+        await db("rubber_ducks")
+          .where({ id })
+          .update({ naam, categorie, kleur, materiaal, beschrijving });
+
+        res.json({ message: "Duck Updated Succesfully!" });
+      } else {
+        res.json({ message: "Duck Updated Failed" });
+      }
+    });
   } catch (error) {
     console.error("Insert error:", error);
     res.status(500).json({ message: "Internal server error" });
