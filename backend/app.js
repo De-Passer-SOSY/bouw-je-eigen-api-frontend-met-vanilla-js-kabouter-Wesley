@@ -55,22 +55,13 @@ app.post("/addDuck", async (req, res) => {
 
 app.put("/updateDuck", async (req, res) => {
   try {
-    const { naam, categorie, kleur, materiaal, beschrijving } = req.body;
-    const allDucks = await db("rubber_ducks");
-    allDucks.forEach(async (duck) => {
-      if (duck.naam === naam) {
-        const id = duck.id;
-        console.log(id);
+    const { id, naam, categorie, kleur, materiaal, beschrijving } = req.body;
 
-        await db("rubber_ducks")
-          .where({ id })
-          .update({ naam, categorie, kleur, materiaal, beschrijving });
+    await db("rubber_ducks")
+      .where({ id })
+      .update({ naam, categorie, kleur, materiaal, beschrijving });
 
-        res.json({ message: "Duck Updated Succesfully!" });
-      } else {
-        res.json({ message: "Duck Updated Failed" });
-      }
-    });
+    res.json({ message: "Duck Updated Succesfully!" });
   } catch (error) {
     console.error("Insert error:", error);
     res.status(500).json({ message: "Internal server error" });
