@@ -1,3 +1,7 @@
 @import "tailwindcss";
 
-/* npx tailwindcss -i ./input.css -o ./output.css --watch (Run this command to update the tailwind) */
+/** 
+ * npx tailwindcss -i ./input.css -o ./output.css --watch 
+ *
+ * Run this command to update the tailwind
+*/

@@ -8,8 +8,35 @@ function init() {
   const searchDuckForm = document.querySelector("#search-duck-form");
   searchDuckForm.addEventListener("submit", searchInDuckList);
 
-  const addDuckForm = document.querySelector("#add-duck-form");
-  addDuckForm.addEventListener("submit", AddToDuckList);
+  const DuckForm = document.querySelector("#duck-form");
+  DuckForm.addEventListener("submit", handleFormSubmit);
+}
+
+async function openDuckPage(e) {
+  const button = e.target;
+  const regex = /\d+/;
+  const id = (button.parentNode.id.match(regex) || [""])[0];
+  pageType = "duck-page";
+}
+
+async function searchDuck(searchMethode, searchKey) {
+  const allDucks = await requestAPI();
+  const key = String(searchKey).toLowerCase();
+
+  const exactMatches = allDucks.filter((duck) => {
+    const value = String(duck[searchMethode]).toLowerCase();
+    return value === key;
+  });
+  if (exactMatches.length > 0) {
+    return exactMatches[0];
+  }
+
+  const filteredDucks = allDucks.filter((duck) => {
+    const value = String(duck[searchMethode]).toLowerCase();
+    return value.includes(key);
+  });
+
+  return filteredDucks.length > 0 ? filteredDucks : allDucks;
 }
 
 async function requestAPI() {
@@ -26,20 +53,27 @@ async function requestAPI() {
   }
 }
 
-async function AddToDuckList(e) {
+async function handleFormSubmit(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
+  const id = formData.get("duck-id") ? formData.get("duck-id") : null;
+
   const naam = formData.get("naam");
   const categorie = formData.get("categorie");
   const kleur = formData.get("kleur");
   const materiaal = formData.get("materiaal");
   const beschrijving = formData.get("beschrijving");
-  const response = await fetch("http://localhost:3333/addDuck", {
-    method: "POST",
+
+  const submitName = e.target;
+  const method = submitName === "submit" ? "POST" : "PUT";
+  const subdomain = submitName === "submit" ? "addDuck" : "updateDuck";
+  const response = await fetch(`http://localhost:3333/${subdomain}`, {
+    method: method,
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      id: id,
       naam: naam,
       categorie: categorie,
       kleur: kleur,
@@ -47,7 +81,7 @@ async function AddToDuckList(e) {
       beschrijving: beschrijving,
     }),
   });
-
+  e.reset();
   const data = await response.json();
   alert(data.message);
 }
@@ -56,9 +90,8 @@ async function searchInDuckList(e) {
   e.preventDefault();
   const formData = new FormData(e.target);
   const name = formData.get("name");
-  const allDucks = await requestAPI();
-  const filteredDucks = allDucks.filter((duck) => duck.naam.includes(name));
-  const searchedDuck = filteredDucks.length > 0 ? filteredDucks : allDucks;
+  const searchedDuck = await searchDuck("naam", name);
+  console.log(searchedDuck);
   const list = document.querySelector("#duck-list");
   list.textContent = "";
   listChild(list, searchedDuck);
@@ -76,8 +109,9 @@ function listChild(parent, content) {
     .map(
       (item) => `
     <li class="p-3 bg-gray-50 m-2">
-      <section class="flex" id=#${item.id}> 
-        <span class="flex flex-1"> ${item.naam} </span>
+      <section class="flex gap-1" id=#${item.id}> 
+        <button class="flex flex-1 duck-page-button"> ${item.naam} </button>
+        <button class="bg-yellow-400 h-8 w-8 hover:cursor-pointer font-bold edite-button"> ✏️ </button>
         <button class="bg-red-400 h-8 w-8 hover:cursor-pointer font-bold delete-button"> X </button>
       </section>
     </li>
@@ -86,13 +120,22 @@ function listChild(parent, content) {
     .join("");
 
   const deleteButton = document.querySelectorAll(".delete-button");
-  console.log(typeof deleteButton);
   deleteButton.forEach((button) => {
-    button.addEventListener("click", deleteTask);
+    button.addEventListener("click", deleteDuck);
+  });
+
+  const editButton = document.querySelectorAll(".edite-button");
+  editButton.forEach((button) => {
+    button.addEventListener("click", updateDuck);
+  });
+
+  const duckPageButton = document.querySelectorAll(".duck-page-button");
+  duckPageButton.forEach((button) => {
+    button.addEventListener("click", openDuckPage);
   });
 }
 
-async function deleteTask(e) {
+async function deleteDuck(e) {
   const button = e.target;
   const regex = /\d+/;
   const id = (button.parentNode.id.match(regex) || [""])[0];
@@ -105,4 +148,27 @@ async function deleteTask(e) {
       createList();
     })
     .catch(() => console.log("❌ Verwijderen mislukt.", "error"));
+}
+
+async function updateDuck(e) {
+  const button = e.target;
+  const regex = /\d+/;
+  const id = (button.parentNode.id.match(regex) || [""])[0];
+
+  const duck = await searchDuck("id", id);
+  console.log(duck);
+
+  const idInput = document.querySelector("#duck-form__id");
+  const naamInput = document.querySelector("#duck-form__naam");
+  const categorieInput = document.querySelector("#duck-form__categorie");
+  const kleurInput = document.querySelector("#duck-form__kleur");
+  const materiaalInput = document.querySelector("#duck-form__materiaal");
+  const beschrijvingInput = document.querySelector("#duck-form__beschrijving");
+
+  idInput.value = duck.id;
+  naamInput.value = duck.naam;
+  categorieInput.value = duck.categorie;
+  kleurInput.value = duck.kleur;
+  materiaalInput.value = duck.materiaal;
+  beschrijvingInput.value = duck.beschrijving;
 }
