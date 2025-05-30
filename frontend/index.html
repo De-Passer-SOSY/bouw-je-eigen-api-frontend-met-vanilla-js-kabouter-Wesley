@@ -8,20 +8,24 @@
   </head>
   <body>
     <section id="main" class="flex flex-row p-5 gap-15">
-      <section class="flex-col">
-        <ul id="duck-list" class="max-h-200 w-full overflow-y-auto"></ul>
-        <form class="border-2 flex flex-1 flex-row" id="search-duck-form">
-          <label>
+      <section class="flex flex-col gap-3">
+        <h1 class="text-3xl font-bold">Duck Database</h1>
+
+        <form
+          class="border-2 flex flex-row rounded-2xl p-2"
+          id="search-duck-form"
+        >
+          <label class="flex w-1/2">
             <span class="sr-only">Duck Name</span>
             <input
-              class="text-center flex border-r-2"
+              class="text-center flex w-full border-r-2"
               type="text"
               placeholder="Duck Name"
               name="name"
             />
           </label>
 
-          <label class="flex flex-1">
+          <label class="flex flex-1 w-1/2">
             <span class="sr-only">Search Duck</span>
             <input
               class="text-center flex w-full"
@@ -30,87 +34,99 @@
             />
           </label>
         </form>
+        <ul
+          id="duck-list"
+          class="max-h-200 w-full overflow-y-auto border-2 rounded-2xl p-1 overflow-x-hidden"
+        ></ul>
       </section>
+      <section
+        class="flex border-2 rounded-sm h-fit gap-5 flex-col min-w-75 bg-gray-50"
+      >
+        <h1 class="text-2xl font-bold text-center">Edit Duck</h1>
+        <form id="duck-form" class="flex flex-col gap-5 h-fit">
+          <input type="hidden" name="duck-id" id="duck-form__id" />
 
-      <form id="duck-form" class="flex flex-col gap-5 bg-gray-50 h-fit">
-        <input type="hidden" name="duck-id" id="duck-form__id" />
-        <label for="naam">
-          <span class="sr-only">Duck Name</span>
-          <input
-            class="text-center"
-            type="text"
-            placeholder="Duck Name"
-            name="naam"
-            id="duck-form__naam"
-          />
-        </label>
-
-        <label for="categorie">
-          <span class="sr-only">Duck Categorie</span>
-          <input
-            class="text-center"
-            type="text"
-            placeholder="Duck categorie"
-            name="categorie"
-            id="duck-form__categorie"
-          />
-        </label>
-
-        <label for="kleur">
-          <span class="sr-only">Duck Kleur</span>
-          <input
-            class="text-center"
-            type="text"
-            placeholder="Duck kleur"
-            name="kleur"
-            id="duck-form__kleur"
-          />
-        </label>
-
-        <label for="materiaal">
-          <span class="sr-only">Duck Materiaal</span>
-          <input
-            class="text-center"
-            type="text"
-            placeholder="Duck materiaal"
-            name="materiaal"
-            id="duck-form__materiaal"
-          />
-        </label>
-
-        <label for="beschrijving">
-          <span class="sr-only">Duck Beschrijving</span>
-          <input
-            class="text-center"
-            type="text"
-            placeholder="Duck beschrijving"
-            name="beschrijving"
-            id="duck-form__beschrijving"
-          />
-        </label>
-
-        <section class="flex flex-row">
-          <label class="text-center p-5 font-bold">
-            <span class="sr-only">Submit Duck</span>
+          <label for="naam" class="flex flex-col w5/6 self-center gap-1">
+            <span>Name</span>
             <input
-              class="border-2 min-w-fit min-h-fit w-15 h-5 bg-gray-300 hover:bg-gray-500"
-              type="submit"
-              value="Submit"
-              name="submit"
+              type="text"
+              placeholder="Duck Name"
+              name="naam"
+              id="duck-form__naam"
+              class="border-2 rounded-sm"
             />
           </label>
 
-          <label class="text-center p-5 font-bold">
-            <span class="sr-only">Update Duck</span>
+          <label for="categorie" class="flex flex-col w5/6 self-center gap-1">
+            <span>Categorie</span>
             <input
-              class="border-2 min-w-fit min-h-fit w-15 h-5 bg-gray-300 hover:bg-gray-500"
-              type="submit"
-              value="Update"
-              name="update"
+              type="text"
+              placeholder="Duck categorie"
+              name="categorie"
+              id="duck-form__categorie"
+              class="border-2 rounded-sm"
             />
           </label>
-        </section>
-      </form>
+
+          <label for="kleur" class="flex flex-col w5/6 self-center gap-1">
+            <span>Kleur</span>
+            <input
+              type="text"
+              placeholder="Duck kleur"
+              name="kleur"
+              id="duck-form__kleur"
+              class="border-2 rounded-sm"
+            />
+          </label>
+
+          <label for="materiaal" class="flex flex-col w5/6 self-center gap-1">
+            <span>Materiaal</span>
+            <input
+              type="text"
+              placeholder="Duck materiaal"
+              name="materiaal"
+              id="duck-form__materiaal"
+              class="border-2 rounded-sm"
+            />
+          </label>
+
+          <label
+            for="beschrijving"
+            class="flex flex-col w5/6 self-center gap-1"
+          >
+            <span>Beschrijving</span>
+            <input
+              type="text"
+              placeholder="Duck beschrijving"
+              name="beschrijving"
+              id="duck-form__beschrijving"
+              class="border-2 rounded-sm"
+            />
+          </label>
+
+          <section class="flex flex-row self-center">
+            <label class="text-center p-5 font-bold">
+              <span class="sr-only">Submit Duck</span>
+              <input
+                class="border-2 p-1 min-w-fit min-h-fit w-25 h-2 bg-gray-300 hover:bg-gray-500 rounded-sm"
+                type="submit"
+                value="Submit"
+                name="submit"
+              />
+            </label>
+
+            <label class="text-center p-5 font-bold">
+              <span class="sr-only">Update Duck</span>
+              <input
+                class="border-2 p-1 min-w-fit min-h-fit w-25 h-2 bg-gray-300 hover:bg-gray-500 rounded-sm"
+                type="submit"
+                value="Update"
+                name="update"
+              />
+            </label>
+          </section>
+        </form>
+      </section>
     </section>
     <section id="duck"></section>
     <script src="script.js"></script>

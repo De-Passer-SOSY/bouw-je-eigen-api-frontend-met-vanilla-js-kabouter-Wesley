@@ -91,7 +91,6 @@ async function searchInDuckList(e) {
   const formData = new FormData(e.target);
   const name = formData.get("name");
   const searchedDuck = await searchDuck("naam", name);
-  console.log(searchedDuck);
   const list = document.querySelector("#duck-list");
   list.textContent = "";
   listChild(list, searchedDuck);
@@ -108,11 +107,11 @@ function listChild(parent, content) {
   parent.innerHTML = content
     .map(
       (item) => `
-    <li class="p-3 bg-gray-50 m-2">
-      <section class="flex gap-1" id=#${item.id}> 
-        <button class="flex flex-1 duck-page-button"> ${item.naam} </button>
-        <button class="bg-yellow-400 h-8 w-8 hover:cursor-pointer font-bold edite-button"> ✏️ </button>
-        <button class="bg-red-400 h-8 w-8 hover:cursor-pointer font-bold delete-button"> X </button>
+    <li class="p-3 w-90 bg-gray-50 rounded-b-sm">
+      <section class="flex gap-1 border-b-2 p-1" id=#${item.id}> 
+        <button class="flex flex-1 text-xl duck-page-button"> ${item.naam} </button>
+        <button class="bg-yellow-400 h-8 w-8 rounded-sm border-2 hover:cursor-pointer font-bold edite-button"> ✏️ </button>
+        <button class="bg-red-400 h-8 w-8 rounded-sm border-2 hover:cursor-pointer font-bold delete-button"> X </button>
       </section>
     </li>
     `
@@ -156,7 +155,6 @@ async function updateDuck(e) {
   const id = (button.parentNode.id.match(regex) || [""])[0];
 
   const duck = await searchDuck("id", id);
-  console.log(duck);
 
   const idInput = document.querySelector("#duck-form__id");
   const naamInput = document.querySelector("#duck-form__naam");
