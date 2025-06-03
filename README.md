@@ -31,4 +31,4 @@ Start the database:
 node backend/app.js
 ```
 
-De database data kan je vinden op: `http:localhost:3333`
+De database data kan je vinden op: `http://localhost:3333`
