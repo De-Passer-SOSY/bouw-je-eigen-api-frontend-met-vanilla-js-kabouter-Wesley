@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./services/db");
+const { findUserByName, verifyPassword, addUser } = require("./auth");
 
 const app = express();
 app.use(cors());
@@ -78,6 +79,30 @@ app.delete("/removeDuck/:id", async (req, res) => {
     console.error("Insert error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
+});
+
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const id = await addUser(username, password);
+    res.status(201).json({ id });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const user = await findUserByName(username);
+  if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
+  const isValid = await verifyPassword(
+    password,
+    user.passwordHash,
+    user.passwordSalt
+  );
+  if (!isValid) return res.status(401).json({ error: "Invalid credentials" });
+  res.status(200).json({ message: "Login successful" });
 });
 
 app.listen(3333, () => {
