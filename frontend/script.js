@@ -7,6 +7,7 @@ function init() {
     window.location.href = "login.html";
   }
 
+  makeDataCircle();
   createList();
 
   const searchDuckForm = document.querySelector("#search-duck-form");
@@ -199,4 +200,69 @@ function getCookie(name) {
     if (key === name) return value;
   }
   return null;
+}
+
+async function makeDataCircle() {
+  const data = await requestAPI();
+
+  const container = document.querySelector("#graph-container");
+  container.innerHTML = ""; // Clear old graphs
+
+  const canvas = document.createElement("canvas");
+  canvas.id = "duck-pie-chart";
+  canvas.width = 400;
+  canvas.height = 400;
+  container.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+
+  const counts = {};
+
+  data.forEach((duck) => {
+    const category = duck.categorie; // Or kleur, materiaal, etc.
+    counts[category] = (counts[category] || 0) + 1;
+  });
+
+  const labels = Object.keys(counts);
+  const values = Object.values(counts);
+  const backgroundColors = [
+    "#60A5FA",
+    "#F87171",
+    "#34D399",
+    "#FBBF24",
+    "#A78BFA",
+    "#F472B6",
+  ];
+
+  if (window.duckChart) {
+    window.duckChart.destroy();
+  }
+
+  window.duckChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          data: values,
+          backgroundColor: backgroundColors,
+          borderColor: "#ffffff",
+          borderWidth: 2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: {
+          display: true,
+          text: "Duck Distribution by Categorie",
+          font: { size: 18 },
+        },
+        legend: {
+          position: "right",
+        },
+      },
+    },
+  });
 }

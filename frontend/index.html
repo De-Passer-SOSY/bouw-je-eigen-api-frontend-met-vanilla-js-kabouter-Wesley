@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ducks</title>
     <link rel="stylesheet" href="output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body class="flex justify-center">
     <section id="main" class="flex flex-row p-5 gap-15">
@@ -46,7 +47,10 @@
         <form id="duck-form" class="flex flex-col gap-5 h-fit">
           <input type="hidden" name="duck-id" id="duck-form__id" />
 
-          <label for="naam" class="flex flex-col w5/6 self-center gap-1">
+          <label
+            for="duck-form__naam"
+            class="flex flex-col w5/6 self-center gap-1"
+          >
             <span>Name</span>
             <input
               type="text"
@@ -57,7 +61,10 @@
             />
           </label>
 
-          <label for="categorie" class="flex flex-col w5/6 self-center gap-1">
+          <label
+            for="duck-form__categorie"
+            class="flex flex-col w5/6 self-center gap-1"
+          >
             <span>Categorie</span>
             <input
               type="text"
@@ -68,7 +75,10 @@
             />
           </label>
 
-          <label for="kleur" class="flex flex-col w5/6 self-center gap-1">
+          <label
+            for="duck-form__kleur"
+            class="flex flex-col w5/6 self-center gap-1"
+          >
             <span>Kleur</span>
             <input
               type="text"
@@ -79,7 +89,10 @@
             />
           </label>
 
-          <label for="materiaal" class="flex flex-col w5/6 self-center gap-1">
+          <label
+            for="duck-form__materiaal"
+            class="flex flex-col w5/6 self-center gap-1"
+          >
             <span>Materiaal</span>
             <input
               type="text"
@@ -91,7 +104,7 @@
           </label>
 
           <label
-            for="beschrijving"
+            for="duck-form__beschrijving"
             class="flex flex-col w5/6 self-center gap-1"
           >
             <span>Beschrijving</span>
@@ -127,6 +140,8 @@
           </section>
         </form>
       </section>
+
+      <section id="graph-container"></section>
     </section>
     <section id="duck"></section>
     <script src="script.js"></script>
