@@ -1,9 +1,6 @@
-
-------
+---
 
 ## 📦 Technologieën
-
-
 
 | Onderdeel        | Technologie                                      |
 | ---------------- | ------------------------------------------------ |
@@ -13,7 +10,7 @@
 | Frontend         | HTML, CSS, Vanilla JavaScript                    |
 | Tools            | Git, GitHub, Postman, VS Code                    |
 
-------
+---
 
 ## Getting Started
 
@@ -32,3 +29,12 @@ node backend/app.js
 ```
 
 De database data kan je vinden op: `http://localhost:3333`
+
+Endpoints:
+
+- `http://localhost:3333`
+- `http://localhost:3333/ducks`
+- `http://localhost:3333/duck/:id`
+- `http://localhost:3333/addDuck`
+- `http://localhost:3333/updateDuck`
+- `http://localhost:3333/removeDuck/:id`
