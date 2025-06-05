@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login/Register</title>
+    <link rel="stylesheet" href="output.css" />
+  </head>
+  <body
+    class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4"
+  >
+    <section id="form-container" class="flex flex-col items-center gap-4">
+      <!-- Login Form -->
+      <form
+        id="login-form"
+        class="flex flex-col gap-4 p-6 bg-white rounded shadow-md w-80"
+      >
+        <h2 class="text-xl font-semibold text-center">Login</h2>
+
+        <label class="flex flex-col">
+          <span class="sr-only">Username</span>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            autocomplete="username"
+            class="px-3 py-2 border border-gray-300 rounded"
+          />
+        </label>
+
+        <label class="flex flex-col">
+          <span class="sr-only">Password</span>
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            autocomplete="current-password"
+            class="px-3 py-2 border border-gray-300 rounded"
+          />
+        </label>
+
+        <button
+          type="submit"
+          name="login"
+          class="px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
+        >
+          Login
+        </button>
+
+        <p class="text-sm text-center">
+          Nog geen account?
+          <button
+            type="button"
+            class="form-switch-button text-blue-600 hover:underline hover:cursor-pointer"
+          >
+            Registreer hier
+          </button>
+        </p>
+      </form>
+
+      <!-- Register Form -->
+      <form
+        id="register-form"
+        class="flex flex-col gap-4 p-6 bg-white rounded shadow-md w-80 hidden"
+      >
+        <h2 class="text-xl font-semibold text-center">Register</h2>
+
+        <label class="flex flex-col">
+          <span class="sr-only">Username</span>
+          <input
+            type="text"
+            placeholder="Username"
+            name="username"
+            autocomplete="username"
+            class="px-3 py-2 border border-gray-300 rounded"
+          />
+        </label>
+
+        <label class="flex flex-col">
+          <span class="sr-only">Password</span>
+          <input
+            type="password"
+            placeholder="Password"
+            name="password"
+            autocomplete="new-password"
+            class="px-3 py-2 border border-gray-300 rounded"
+          />
+        </label>
+
+        <button
+          type="submit"
+          name="register"
+          class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700"
+        >
+          Register
+        </button>
+
+        <p class="text-sm text-center">
+          Al geregistreerd?
+          <button
+            type="button"
+            class="form-switch-button text-green-600 hover:underline hover:cursor-pointer"
+          >
+            Log in hier
+          </button>
+        </p>
+      </form>
+    </section>
+    <script src="login.js"></script>
+  </body>
+</html>

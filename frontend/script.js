@@ -3,6 +3,10 @@
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
+  if (!getCookie("loggedIn")) {
+    window.location.href = "login.html";
+  }
+
   createList();
 
   const searchDuckForm = document.querySelector("#search-duck-form");
@@ -186,4 +190,13 @@ async function updateDuck(e) {
   } catch (err) {
     console.error(`Something went wrong! Error: ${err}`);
   }
+}
+
+function getCookie(name) {
+  const cookies = document.cookie.split("; ");
+  for (let c of cookies) {
+    const [key, value] = c.split("=");
+    if (key === name) return value;
+  }
+  return null;
 }
